@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset='utf-8'>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="description" content="Udacity Self-Driving Car Nanodegree -- Project 3">
+
+<link rel="stylesheet" type="text/css" media="screen" href="https://jefflirion.github.io/stylesheets/stylesheet.css">
+
+<title>Udacity Self-Driving Car Nanodegree -- Project 3</title>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div id="header_wrap" class="outer">
+<header class="inner">
+<a id="home_banner" href="https://jefflirion.github.io/udacity/index.html#self-driving-car">Self-Driving Car</a>
+<a id="repo_banner" href="https://github.com/JeffLIrion/udacity_car_nanodegree_project03">View this repo</a>
+<h1 id="project_title">Udacity Self-Driving Car Nanodegree -- Project 3</h1>
+
+</header>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+<section id="main_content" class="inner">
+
+
+
+
+<h1><a id="Behavioral_Cloning_0"></a><strong>Behavioral Cloning</strong></h1>
+<p><a href="https://jefflirion.github.io/udacity_car_nanodegree_project03/Behavioral_Cloning.html">Exported Jupyter notebook</a></p>
+
+<h2><a id="From_Udacity_6"></a>From Udacity:</h2>
+<blockquote>
+<p>The goals / steps of this project are the following:</p>
+<ul>
+<li>Use the simulator to collect data of good driving behavior</li>
+<li>Build a convolution neural network in Keras that predicts steering angles from images</li>
+<li>Train and validate the model with a training and validation set</li>
+<li>Test that the model successfully drives around track one without leaving the road</li>
+<li>Summarize the results with a written report</li>
+</ul>
+<h3><a id="Rubric_Points_18"></a>Rubric Points</h3>
+<p>Here I will consider the <a href="https://review.udacity.com/#!/rubrics/432/view">rubric points</a> individually and describe how I addressed each point in my implementation.</p>
+<h3><a id="Files_Submitted__Code_Quality_24"></a>Files Submitted &amp; Code Quality</h3>
+<h4><a id="1_Submission_includes_all_required_files_and_can_be_used_to_run_the_simulator_in_autonomous_mode_26"></a>1. Submission includes all required files and can be used to run the simulator in autonomous mode</h4>
+<p>My project includes the following files:</p>
+<ul>
+<li><a href="https://jefflirion.github.io/udacity_car_nanodegree_project03/model.py">model.py</a> containing the script to create and train the model</li>
+<li><a href="https://jefflirion.github.io/udacity_car_nanodegree_project03/drive.py">drive.py</a> for driving the car in autonomous mode</li>
+<li><a href="https://jefflirion.github.io/udacity_car_nanodegree_project03/model.h5">model.h5</a> containing a trained convolution neural network</li>
+<li><s>writeup_report.md or writeup_report.pdf</s> <a href="https://jefflirion.github.io/udacity_car_nanodegree_project03/README.md">README.md</a> summarizing the results</li>
+</ul>
+<h4><a id="2_Submission_includes_functional_code_35"></a>2. Submission includes functional code</h4>
+<p>Using the Udacity provided simulator and my <a href="https://jefflirion.github.io/udacity_car_nanodegree_project03/drive.py">drive.py</a> file, the car can be driven autonomously around the track by executing</p>
+<pre><code class="language-sh">python drive.py model.h5
+</code></pre>
+<h4><a id="3_Submission_code_is_usable_and_readable_43"></a>3. Submission code is usable and readable</h4>
+<p>The <a href="https://jefflirion.github.io/udacity_car_nanodegree_project03/model.py">model.py</a> file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.</p>
+<h3><a id="Model_Architecture_and_Training_Strategy_49"></a>Model Architecture and Training Strategy</h3>
+<h4><a id="1_An_appropriate_model_architecture_has_been_employed_51"></a>1. An appropriate model architecture has been employed</h4>
+</blockquote>
+<p>My model consists of a convolution neural network with 5x5 and 3x3 filter sizes and depths between 24 and 64. The images are cropped and normalized in the model using a Keras Cropping2D layer and Lambda layer, respectively.</p>
+<blockquote>
+<h4><a id="2_Attempts_to_reduce_overfitting_in_the_model_55"></a>2. Attempts to reduce overfitting in the model</h4>
+<p>The model contains dropout layers in order to reduce overfitting.</p>
+<p>The model was trained and validated on different data sets to ensure that the model was not overfitting. The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.</p>
+<h4><a id="3_Model_parameter_tuning_61"></a>3. Model parameter tuning</h4>
+<p>The model used an adam optimizer, so the learning rate was not tuned manually.</p>
+<h4><a id="4_Appropriate_training_data_65"></a>4. Appropriate training data</h4>
+<p>Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving and recovering from the left and right sides of the road.</p>
+</blockquote>
+<p>For details about how I created the training data, see the next section.</p>
+<br>
+
+<h2><a id="Model_Architecture_and_Training_Strategy_73"></a>Model Architecture and Training Strategy</h2>
+<h3><a id="1_Solution_Design_Approach_75"></a>1. Solution Design Approach</h3>
+<p>Here is the overall strategy that I followed for this project.</p>
+<ol>
+<li><strong>Record data and successfully train a model.</strong> The goal of this step was simply to learn how to work with the data. The steps taken were:</li>
+</ol>
+<ul>
+<li>Record a very small amount of training data (about 10 seconds worth).</li>
+<li>Train and save a very simple model based on this data.</li>
+</ul>
+<ol start="2">
+<li><strong>Record more data and successfully train a model using 2 input datasets.</strong></li>
+</ol>
+<ul>
+<li>Record another small amount of training data.</li>
+<li>Train and save a very simple model based on this data and the previously recorded data.</li>
+</ul>
+<ol start="3">
+<li><strong>Pre-process the data.</strong></li>
+</ol>
+<ul>
+<li>Load the right and left camera images and correct for the steering angles.</li>
+<li>Horizontally flip all of the images and negate the steering angles.</li>
+<li>Divide each recorded dataset into its constituent recordings.</li>
+<li>Implement a moving average to smooth the steering measurements.</li>
+<li>Implement an option to load the data as numpy arrays or load it using a generator.</li>
+</ul>
+<ol start="4">
+<li><strong>Record additional data and load it using a generator.</strong></li>
+</ol>
+<ul>
+<li>Record 3 full loops around the track.</li>
+<li>Record approximately 1 full loop in which I recover the car from being too far to the right.</li>
+<li>Record approximately 1 full loop in which I recover the car from being too far to the left.</li>
+<li>Implement the option to load the data using a generator.</li>
+</ul>
+<ol start="5">
+<li><strong>Improve the model.</strong></li>
+</ol>
+<ul>
+<li>Crop the images.</li>
+<li>Normalize the images.</li>
+<li>Modify the model.</li>
+</ul>
+<p>My first goal was simply to successfully train a model, so for this step I used a single fully connected layer (<code>Flatten</code> followed by <code>Dense</code>). When it was time to improve the model, in the spirit of transfer learning I started off with the model that performed best in the “Behavioral Cloning” videos; specifically, I started with the NVIDIA autonomous driving model, as presented in video #14. This performed really well, but it still needed some improvement.</p>
+<p>The data itself is a critical aspect of this problem, but I will discuss that more in section “3. Creation of the Training Set &amp; Training Process.”</p>
+<p>When training the model, I split the data into a training set (80%) and a validation set (20%), and I trained the model for 20 epochs. The training loss decreased on most of the epochs, while the validation loss only decreased a little bit at the start and then stabilized. That said, the validation loss was still small and of the same magnitude as the mean squared error on the training set, so this did not concern me. Besides, there’s room for some variation when driving – maybe one driver tends to drift to one side of the lane, or another driver might continuously make small corrections in order to stay in the center. Therefore, I placed more importance on the actual performance of the model in the simulator than on its mean squared error.</p>
+<p>Initially, the NVIDIA-based model struggled around some of the sharper turns. Admittedly, I struggled on these portions of the track, so it should come as no surprise that the model struggled, as well! To combat this, I added some additional training data and utilized dropout, and the revised model was able to drive the vehicle around the track without leaving the road.</p>
+<h3><a id="2_Final_Model_Architecture_123"></a>2. Final Model Architecture</h3>
+<p>The final model architecture (see the function <code>create_model</code> in <a href="https://jefflirion.github.io/udacity_car_nanodegree_project03/model.py">model.py</a>) consisted of some image pre-processing (cropping and normalization) followed by 4 convolution layers and then 3 fully-connected layers. Here is a visualization of the model:</p>
+<p><img src="./images/model.png" alt="model"></p>
+<h3><a id="3_Creation_of_the_Training_Set__Training_Process_131"></a>3. Creation of the Training Set &amp; Training Process</h3>
+<p>I started off by trying to capture ideal driving behavior, meaning driving in the center of the lane. Here is a representative image:</p>
+<p><img src="./images/center_2017_09_10_14_40_23_952.jpg" alt="center driving"></p>
+<p>I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to correct itself when it veered away from the center of the road. These images show a recovery from the right side of the road to the center:</p>
+<p><img src="./images/center_2017_09_12_09_22_32_275.jpg" alt="recover right image 1"><br>
+<img src="./images/center_2017_09_12_09_22_33_675.jpg" alt="recover right image 2"><br>
+<img src="./images/center_2017_09_12_09_22_34_909.jpg" alt="recover right image 3"></p>
+<p>To augment the data, I also flipped images and angles so that the model has equal amounts of data in which the car is turning left and right. An alternative approach would have been to drive around the track in the opposite direction, but this was easier and accomplished the same thing. Here is an example of a flipped image:</p>
+<p><img src="./images/center_2017_09_10_14_40_23_952_flipped.jpg" alt="center driving (flipped)"></p>
+<p>In the videos, it was said that using the mouse yields the best training data. However, I was using the simulator on a laptop and using the mouse was really difficult, so I used the keys instead. Since a key is a binary input – either it’s pressed or it’s not – this resulted in my turns being a sequence of frequent button presses rather than a steady turn. In order to improve the quality of the training data, I applied a moving average filter so that each steering angle was actually the average of itself and the 5 measurements before and afterwards (so it was the average of a total of 11 measurements).</p>
+<p>I also included the left and right camera images, using a correction factor of 0.2 to adjust their associated steering measurements from the recorded steering measurement.</p>
+<p>I cropped 70 pixels from the top of the images and 25 pixels from the bottom, as demonstrated in the project videos.</p>
+<p>After all of the pre-processing was done, I had a training set with 44,904 images and associated steering angles. I shuffled the dataset and used 80% for training and 20% for validation. As discussed above, I ran the model for 20 epochs. I used an adam optimizer so that manually training the learning rate wasn’t necessary.</p>
+<p>I trained the model using the following code:</p>
+<pre><code class="language-sh"><span class="hljs-built_in">export</span> KERAS_BACKEND=tensorflow
+<span class="hljs-built_in">export</span> datadir=../../Projects/Project_03/data
+
+<span class="hljs-built_in">export</span> drives=<span class="hljs-variable">$datadir</span>/drive0:<span class="hljs-variable">$datadir</span>/drive1:<span class="hljs-variable">$datadir</span>/drive2:<span class="hljs-variable">$datadir</span>/drive3
+<span class="hljs-built_in">export</span> drives=<span class="hljs-variable">$drives</span>:<span class="hljs-variable">$datadir</span>/recover_right1:<span class="hljs-variable">$datadir</span>/recover_right2:<span class="hljs-variable">$datadir</span>/recover_right3
+<span class="hljs-built_in">export</span> drives=<span class="hljs-variable">$drives</span>:<span class="hljs-variable">$datadir</span>/recover_left1:<span class="hljs-variable">$datadir</span>/recover_left2
+<span class="hljs-built_in">export</span> drives=<span class="hljs-variable">$drives</span>:<span class="hljs-variable">$datadir</span>/bobbie2
+
+python ../../Projects/Project_03/model.py --drives <span class="hljs-variable">$drives</span> --convolve <span class="hljs-number">11</span> --correction <span class="hljs-number">0.2</span> --epochs <span class="hljs-number">20</span>
+</code></pre>
+<br>
+
+<h2><a id="Video_171"></a>Video</h2>
+
+<video width="320" controls>
+<source src="./video.mp4" type="video/mp4">
+</video>
+
+
+
+
+</section>
+</div>
+
+<!-- FOOTER  -->
+<div id="footer_wrap" class="outer">
+<footer class="inner">
+<p class="copyright">Webpage maintained by <a href="https://github.com/JeffLIrion">Jeff Irion</a></p>
+<p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+</footer>
+</div>
+
+
+
+
+</body>
+</html>
